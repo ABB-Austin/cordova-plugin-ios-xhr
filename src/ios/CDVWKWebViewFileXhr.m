@@ -369,6 +369,9 @@ NS_ASSUME_NONNULL_BEGIN
         return sendResult( @{ @"error" : @"Invalid url"});
     }
     
+    // Fix for specific characters in URL: https://stackoverflow.com/questions/64329705/http-and-https-calls-not-working-after-cordova-upgrade
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     NSURL *url = [NSURL URLWithString:urlString];
     
     if (![url.scheme.lowercaseString isEqualToString:@"http"] && ![url.scheme.lowercaseString isEqualToString:@"https"]) {
